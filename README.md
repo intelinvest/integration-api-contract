@@ -325,3 +325,39 @@ public class ParseInstruction {
 
 * модуль может быть написан на любом ЯП
 * модуль должен иметь Docker файл и уметь работать как самостоятельно, так из контейнера
+
+
+# Пример на spring-boot
+
+## StatusEndpoint
+```
+@RestController
+@RequestMapping("status")
+public class StatusEndpoint {
+
+    @GetMapping()
+    public ResponseEntity<Void> status() {
+        return ResponseEntity.ok().build();
+    }
+}
+```
+
+## EntryEndpoint
+
+```
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/input")
+public class EntryEndpoint {
+
+    private final EtherscanService etherscanService;
+
+    @PostMapping("credentials")
+    public ResponseEntity<DealsImportResult> processIntegration(@Valid @RequestBody Credentials credentials) {
+        EtherTransactionReport etherTransactionReport = etherscanService.getReport(credentials.getAddress());
+        EtherscanApiImporter etherscanApiImporter = new EtherscanApiImporter(etherTransactionReport);
+        DealsImportResult result = etherscanApiImporter.process();
+        return ResponseEntity.ok(result);
+    }
+}
+```
