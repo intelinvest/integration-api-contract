@@ -361,3 +361,13 @@ public class EntryEndpoint {
     }
 }
 ```
+
+## EtherscanService
+
+Реализует логику для получения данных из API Etherscan, с учетом ограничения на количество 
+запросов в секунду. Например, получаем закомиченные транзакции (https://docs.etherscan.io/api-endpoints/accounts#get-a-list-of-normal-transactions-by-address)
+
+
+## EtherscanApiImporter
+
+Реализует логику по обработке списка транзакций полученных из сервиса, приводя их к модели контакта описанной выше
